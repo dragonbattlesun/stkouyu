@@ -27,11 +27,14 @@ typedef void(^KYPlayFinishBlock)(void);
 
 - (void)kyTestEngineDidRecordStart;
 - (void)kyTestEngineDidRecordStartFail:(NSString *)str;
-- (void)kyTestEngineDidRecordTick:(NSString *)tick;
+- (void)kyTestEngineDidRecordTick:(CGFloat)millisUntilFinished percentUntilFinished:(CGFloat)percentUntilFinished;
 - (void)kyTestEngineDidRecordEnd;
 - (void)kyTestEngineDidScore:(NSString *)str;
 - (void)kyTestEngineDidRecordFeedFail:(NSString *)str;
-
+- (void)kyTestEngineDidRecordWriteAudioResult:(BOOL)result;
+- (void)kyTestEngineDidPlayStart;
+- (void)kyTestEngineDidPlayStartFail:(NSString *)str;
+- (void)kyTestEngineDidPlayEnd;
 @end
 
 @interface KYTestEngine : NSObject
@@ -46,15 +49,18 @@ typedef void(^KYPlayFinishBlock)(void);
  @param startEngineConfig 初始化引擎配置参数
  @param finishBlock 初始化是否成功回调
  */
-- (void)initEngine:(KYEngineType)engineType startEngineConfig:(KYStartEngineConfig *)startEngineConfig finishBlock:(void(^)(BOOL isSuccess))finishBlock;
+- (void)initEngine:(KYEngineType)engineType startEngineConfig:(KYStartEngineConfig *)startEngineConfig finishBlock:(void(^)(BOOL isSuccess, NSString *str))finishBlock;
+
 
 /**
  启动引擎开始评测 
  
  @param testConfig  评测配置参数
  @param testResultBlock 评测成功回调
+ @param finishBlock 开始评测是否成功回调
  */
-- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock;
+- (NSString *)startEngineWithTestConfig:(KYTestConfig *)testConfig result:(KYTestResultBlock)testResultBlock finishBlock:(void(^)(BOOL isSuccess, NSString *str))finishBlock;
+
 
 /**
  关闭引擎（有回调）

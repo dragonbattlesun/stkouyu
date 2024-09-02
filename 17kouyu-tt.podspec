@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
 
   s.vendored_frameworks = 'ios/STKouyuEngine.framework'
   s.vendored_libraries = 'ios/libskegn.a'
-  s.resource = 'ios/skegn.h'
+  s.resource = ['ios/skegn.h','skegn_errno.h']
   s.frameworks = %w(
     Foundation
     CoreGraphics
